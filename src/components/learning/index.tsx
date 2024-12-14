@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+// @coderabbitai review
 function Learning() {
   const [learningPoints, setLearningPoints] = useState<string[]>([]);
   const [input, setInput] = useState<string>('');
