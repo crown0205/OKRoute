@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// @coderabbitai review
 
 function HomePage() {
   return (

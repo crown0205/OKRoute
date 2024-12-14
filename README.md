@@ -1,5 +1,3 @@
-<!-- @coderabbitai   -->
-
 # OKRoute
 
 분기별 프로젝트 관리 툴
