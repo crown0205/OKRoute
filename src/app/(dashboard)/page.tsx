@@ -1,11 +1,14 @@
-import Learning from '@/components/learning';
+import LearningSection from '@/components/learning/LearningSection';
+import OKRSection from '@/components/okr/OKRSection';
 
 function DashboardPage() {
   return (
-    <div className="flex flex-col gap-2 p-4">
+    <div className="flex flex-col gap-4 p-4">
       <h1 className="text-2xl font-bold">OKRoute</h1>
 
-      <Learning />
+      <LearningSection />
+
+      <OKRSection />
     </div>
   );
 }
