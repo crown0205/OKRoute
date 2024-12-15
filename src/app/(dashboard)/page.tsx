@@ -1,5 +1,3 @@
-// @coderabbitai review
-
 import Learning from '@/components/learning';
 
 function DashboardPage() {
