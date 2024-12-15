@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 function Learning() {
   const itemsRef = useRef<HTMLInputElement[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isShowDescription, setIsShowDescription] = useState<boolean>(true);
   const [learningPoints, setLearningPoints] = useState<string[]>([]);
   const [input, setInput] = useState<string>('');
 
@@ -17,17 +18,28 @@ function Learning() {
 
   return (
     <div className="flex flex-col max-w-screen-md">
-      <h2 className="text-xl font-bold">Learning points</h2>
-      <span className="flex flex-col gap-2 mt-4 mb-2 p-4 bg-gray-100 rounded-md">
-        <div className="flex flex-row gap-2">
-          ⚠️
-          <span className="text-sm text-gray-500 whitespace-pre-line break-all">
-            {`이곳에 이번 쿼터에서 배운 점들을 생각 날때마다 기록합니다.
+      <div className="flex flex-row items-center justify-between">
+        <h2 className="text-xl font-bold">Learning points</h2>
+        <button
+          className="text-sm text-gray-500"
+          onClick={() => setIsShowDescription(!isShowDescription)}
+        >
+          {isShowDescription ? '➖' : '➕'}
+        </button>
+      </div>
+
+      {isShowDescription && (
+        <span className="flex flex-col gap-2 mt-4 mb-2 p-4 bg-gray-100 rounded-md">
+          <div className="flex flex-row gap-2">
+            ⚠️
+            <span className="text-sm text-gray-500 whitespace-pre-line break-all">
+              {`이곳에 이번 쿼터에서 배운 점들을 생각 날때마다 기록합니다.
               짧은 문장이여도 좋고, 문단이여도 좋습니다.
               기록함으로써 배운 것들을 훨씬 강화 시킵니다.`}
-          </span>
-        </div>
-      </span>
+            </span>
+          </div>
+        </span>
+      )}
 
       {/* 배울점을 기록할 수 있는 공간 */}
       <div className="flex flex-col gap-1 mt-1">
