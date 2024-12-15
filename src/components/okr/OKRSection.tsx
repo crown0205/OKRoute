@@ -6,6 +6,7 @@ import {
   CardLayout,
   Circle,
   DescriptionSection,
+  GoalMessage,
   InfoMessage,
   Title,
 } from '../common';
@@ -52,7 +53,7 @@ function OKRSection() {
               {description.map(desc => (
                 <div key={desc} className="flex flex-row gap-2 items-center">
                   <Circle className="dark:bg-[#000]" />
-                  <span className="text-sm whitespace-pre-line break-keep">
+                  <span className="text-sm whitespace-pre-line break-keep text-[#000]">
                     {desc}
                   </span>
                 </div>
@@ -73,6 +74,22 @@ function OKRSection() {
           </div>
         </CardLayout>
       )}
+
+      <div className="flex flex-row gap-4 mt-4">
+        {/* personal section  */}
+        <div className="flex-1">
+          <Title>Personal</Title>
+
+          <CardLayout>
+            <GoalMessage>Personal OKR를 작성해 보세요.</GoalMessage>
+          </CardLayout>
+        </div>
+
+        {/* work section */}
+        <div className="flex-1">
+          <Title>Work</Title>
+        </div>
+      </div>
     </div>
   );
 }
