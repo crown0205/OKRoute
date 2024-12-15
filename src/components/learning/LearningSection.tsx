@@ -2,6 +2,8 @@
 
 import { useRef, useState } from 'react';
 import { Title, Circle } from '../common';
+import InfoMessage from '../common/InfoMessage';
+import CardLayout from '../common/CardLayout';
 
 // @coderabbitai review
 function LearningSection() {
@@ -31,16 +33,13 @@ function LearningSection() {
 
       {/* TODO : 애니메이션 추가 */}
       {isShowDescription && (
-        <span className="flex flex-col gap-2 mt-4 mb-2 p-4 bg-gray-100 rounded-md">
-          <div className="flex flex-row gap-2">
-            ⚠️
-            <span className="text-sm text-gray-500 whitespace-pre-line break-all">
-              {`이곳에 이번 쿼터에서 배운 점들을 생각 날때마다 기록합니다.
+        <CardLayout>
+          <InfoMessage>
+            {`이곳에 이번 쿼터에서 배운 점들을 생각 날때마다 기록합니다.
               짧은 문장이여도 좋고, 문단이여도 좋습니다.
               기록함으로써 배운 것들을 훨씬 강화 시킵니다.`}
-            </span>
-          </div>
-        </span>
+          </InfoMessage>
+        </CardLayout>
       )}
 
       {/* 배울점을 기록할 수 있는 공간 */}

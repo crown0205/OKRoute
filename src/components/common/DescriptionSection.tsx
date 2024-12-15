@@ -14,7 +14,7 @@ function DescriptionSection({ title, description }: DescriptionSectionProps) {
   const [isShow, setIsShow] = useState<boolean>(true);
 
   return (
-    <div className="flex flex-col gap-2 w-[50%] p-2 border-2 border-gray-300 rounded-md">
+    <div className="flex flex-col gap-2 w-[50%] p-2 border-[1px] border-[#cacaca] rounded-md">
       <div className="flex flex-row items-center flex-1 gap-2">
         <button className="py-1" onClick={() => setIsShow(!isShow)}>
           <BiSolidDownArrow
