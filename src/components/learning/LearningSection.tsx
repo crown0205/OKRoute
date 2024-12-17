@@ -1,9 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { Title, Circle } from '../common';
-import InfoMessage from '../common/InfoMessage';
-import CardLayout from '../common/CardLayout';
+import { CardLayout, Circle, InfoMessage, Title } from '../common';
 
 // @coderabbitai review
 function LearningSection() {
