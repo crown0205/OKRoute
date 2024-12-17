@@ -10,6 +10,8 @@ import {
   InfoMessage,
   Title,
 } from '../common';
+import { cn } from '@/lib/utils';
+import OKRInput from '../common/OKRInput';
 
 const description = [
   '`Key Results` 는 어떻게 성과를 측정하는 도구 입니다.',
@@ -83,6 +85,11 @@ function OKRSection() {
           <CardLayout>
             <GoalMessage>Personal OKR를 작성해 보세요.</GoalMessage>
           </CardLayout>
+
+          <div className="flex flex-col gap-2">
+            <OKRInput />
+            <OKRInput />
+          </div>
         </div>
 
         {/* work section */}
