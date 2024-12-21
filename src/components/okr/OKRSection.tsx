@@ -12,6 +12,7 @@ import {
 } from '../common';
 import { cn } from '@/lib/utils';
 import OKRInput from '../common/OKRInput';
+import { BiSolidDownArrow } from 'react-icons/bi';
 
 const description = [
   '`Key Results` 는 어떻게 성과를 측정하는 도구 입니다.',
@@ -30,9 +31,53 @@ const key_result_description = [
   '목적: 주요 결과는 성공을 측정하고 목표 달성의 진척 상황을 추적하는 수단을 제공합니다.',
 ];
 
+const OKR_INIT = [
+  {
+    value: '',
+    isChecked: false,
+    paddingLeft: 0,
+  },
+  {
+    value: '',
+    isChecked: false,
+    paddingLeft: 0,
+  },
+];
+
 function OKRSection() {
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true);
-  const [okr, setOKR] = useState<string[]>([]);
+  const [isShowPersonalOKR, setIsShowPersonalOKR] = useState<boolean>(true);
+
+  const [personalOKR, setPersonalOKR] = useState<typeof OKR_INIT>(OKR_INIT);
+
+  const handleKeyDown = (
+    index: number,
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+
+      if (event.shiftKey) {
+        const newPersonalOKR = [...personalOKR];
+        newPersonalOKR[index].paddingLeft = 0;
+        setPersonalOKR(newPersonalOKR);
+      } else {
+        const newPersonalOKR = [...personalOKR];
+        newPersonalOKR[index].paddingLeft = 20;
+        setPersonalOKR(newPersonalOKR);
+      }
+
+      event.currentTarget.focus();
+    }
+
+    if (event.key === 'Enter') {
+      const newPersonalOKR = [
+        ...personalOKR,
+        { value: '', isChecked: false, paddingLeft: 0 },
+      ];
+      setPersonalOKR(newPersonalOKR);
+    }
+  };
 
   return (
     <div>
@@ -87,8 +132,59 @@ function OKRSection() {
           </CardLayout>
 
           <div className="flex flex-col gap-2">
-            <OKRInput />
-            <OKRInput />
+            <div className="text-sm flex flex-row gap-2 items-center">
+              <button
+                className="py-1"
+                onClick={() => setIsShowPersonalOKR(!isShowPersonalOKR)}
+              >
+                <BiSolidDownArrow
+                  className={cn(
+                    'text-black dark:text-[#fff] transition-transform duration-200',
+                    !isShowPersonalOKR ? '-rotate-90' : '',
+                  )}
+                />
+              </button>
+
+              <div>Key Results</div>
+            </div>
+
+            {/* input  */}
+            {personalOKR.map((okr, index) => (
+              <div
+                key={index}
+                className="flex flex-row gap-2 items-center"
+                style={{ paddingLeft: `${okr.paddingLeft}px` }}
+              >
+                <input
+                  type="checkbox"
+                  checked={okr.isChecked}
+                  // onChange={handleCheckboxChange}
+                />
+                <input
+                  className={cn(
+                    'flex-1 bg-transparent focus:outline-none',
+                    okr.isChecked && 'text-gray-500 line-through',
+                  )}
+                  value={okr.value}
+                  placeholder="할 일"
+                  onKeyDown={e => handleKeyDown(index, e)}
+                  // onChange={handleChange}
+                />
+              </div>
+            ))}
+
+            {/* add button  */}
+            <button
+              className="text-sm text-gray-500 p-2 self-start border border-gray-500 rounded-md"
+              onClick={() =>
+                setPersonalOKR([
+                  ...personalOKR,
+                  { value: '', isChecked: false, paddingLeft: 0 },
+                ])
+              }
+            >
+              ADD OKR
+            </button>
           </div>
         </div>
 
