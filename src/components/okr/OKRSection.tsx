@@ -32,7 +32,7 @@ function OKRSection() {
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true);
 
   return (
-    <div>
+    <div className="mb-4 flex flex-col gap-2">
       <div className="flex flex-row gap-2 items-center">
         <Title>OKR</Title>
         <button
