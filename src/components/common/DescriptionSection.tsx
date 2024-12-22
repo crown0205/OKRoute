@@ -20,7 +20,7 @@ function DescriptionSection({ title, description }: DescriptionSectionProps) {
           <BiSolidDownArrow
             className={cn(
               'text-[#000] transition-transform duration-200',
-              isShow ? '-rotate-90' : '',
+              !isShow ? '-rotate-90' : '',
             )}
           />
         </button>
