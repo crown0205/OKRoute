@@ -1,19 +1,13 @@
-import LearningSection from '@/components/learning/LearningSection';
+import { Title } from '@/components/common';
 import OKRSection from '@/components/okr/OKRSection';
 import TodoSection from '@/components/todo/TodoSection';
 
 function DashboardPage() {
   return (
-    <div className="flex flex-col gap-4 p-4">
-
-      <LearningSection />
-
-      <hr />
-      <OKRSection />
-
-      <hr />
-      <TodoSection />
-      {/* <ReferenceSection /> */}
+    <div>
+      <div>
+        <Title>Dashboard</Title>
+      </div>
 
       {/* 플래너 영역 */}
 

@@ -4,7 +4,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-2 p-4 max-w-screen-md mx-auto">
       <Header />
-      {children}
+      <div className="flex flex-col gap-4 p-4">{children}</div>
     </div>
   );
 }

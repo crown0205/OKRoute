@@ -9,14 +9,15 @@ const links = [
   { href: '/learning', label: 'Learning' },
   { href: '/okr', label: 'OKR' },
   { href: '/todo', label: 'Todo' },
-  { href: '/reference', label: 'Reference' },
+  { href: '/planner', label: 'Planner' },
+  { href: '/reflection', label: 'Reflection' },
 ];
 
 function Header() {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-row justify-between items-center">
+    <div className="flex flex-row justify-between items-center mb-4">
       <h1 className="text-2xl font-bold">OKRoute 📊</h1>
       <div className="flex flex-row gap-2">
         {links.map(link =>
