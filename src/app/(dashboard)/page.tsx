@@ -1,5 +1,6 @@
 import LearningSection from '@/components/learning/LearningSection';
 import OKRSection from '@/components/okr/OKRSection';
+import TodoSection from '@/components/todo/TodoSection';
 
 function DashboardPage() {
   return (
@@ -9,6 +10,8 @@ function DashboardPage() {
       <LearningSection />
 
       <OKRSection />
+
+      <TodoSection />
     </div>
   );
 }
