@@ -29,7 +29,6 @@ function LearningSection() {
         </button>
       </div>
 
-      {/* TODO : 애니메이션 추가 */}
       {isShowDescription && (
         <CardLayout>
           <InfoMessage>
