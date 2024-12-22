@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
-const links = [
+const authenticatedLinks = [
   { href: '/', label: 'Home' },
   { href: '/learning', label: 'Learning' },
   { href: '/okr', label: 'OKR' },
@@ -13,8 +13,16 @@ const links = [
   { href: '/reflection', label: 'Reflection' },
 ];
 
+const unauthenticatedLinks = [
+  { href: '/login', label: 'Login' },
+  { href: '/signup', label: 'Sign Up' },
+];
+
 function Header() {
+  const isLoggedIn = true;
   const pathname = usePathname();
+
+  const links = isLoggedIn ? authenticatedLinks : unauthenticatedLinks;
 
   return (
     <div className="flex flex-row justify-between items-center mb-4">
