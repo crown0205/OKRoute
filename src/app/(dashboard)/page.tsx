@@ -1,5 +1,6 @@
 import LearningSection from '@/components/learning/LearningSection';
 import OKRSection from '@/components/okr/OKRSection';
+import ReferenceSection from '@/components/reference/ReferenceSection';
 import TodoSection from '@/components/todo/TodoSection';
 
 function DashboardPage() {
@@ -9,9 +10,16 @@ function DashboardPage() {
 
       <LearningSection />
 
+      <hr />
       <OKRSection />
 
+      <hr />
       <TodoSection />
+      {/* <ReferenceSection /> */}
+
+      {/* 플래너 영역 */}
+
+      {/* 분기별 피드백 영역 */}
     </div>
   );
 }
