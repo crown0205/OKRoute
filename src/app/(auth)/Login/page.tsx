@@ -2,39 +2,87 @@
 
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-interface LoginFormInputs {
+interface AuthFormInputs {
   email: string;
   password: string;
+  passwordConfirm?: string;
 }
 
 function LoginPage() {
+  const [isLogin, setIsLogin] = useState(true);
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm<LoginFormInputs>();
+  } = useForm<AuthFormInputs>();
   const router = useRouter();
 
-  const onSubmit = async (data: LoginFormInputs) => {
-    // TODO: 여기에 로그인 로직 구현
-    console.log('로그인 시도:', data);
+  const onSubmit = async (data: AuthFormInputs) => {
+    if (isLogin) {
+      console.log('로그인 시도:', data);
+    } else {
+      console.log('회원가입 시도:', data);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8 p-8 bg-gray-200 rounded-lg shadow-md">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            로그인
-          </h2>
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div
+        className="max-w-md w-full space-y-6 p-6 sm:p-8 bg-gray-50 rounded-lg shadow-md flex flex-col transition-all duration-300 ease-in-out overflow-hidden"
+        style={{
+          maxHeight: isLogin ? '620px' : '670px',
+        }}
+      >
+        <div className="text-center mb-6">
+          <div className="flex justify-center mb-2">
+            <svg
+              className="w-12 h-12 text-orange-500"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900">OKRoute</h1>
+          <p className="mt-2 text-sm text-gray-600">
+            서비스를 이용하시려면 로그인해주세요
+          </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="rounded-md shadow-sm space-y-4">
+
+        <div className="flex justify-around space-x-4 bg-gray-50 rounded-full relative border border-gray-300">
+          <div
+            className="absolute top-1/2 h-[80%] w-[48%] bg-orange-500 rounded-full transition-transform duration-300 ease-in-out -translate-y-1/2"
+            style={{
+              transform: `translate(${isLogin ? '-50%' : '50%'}, -50%)`,
+            }}
+          />
+          <button
+            onClick={() => setIsLogin(true)}
+            className={`flex-1 px-6 py-3 text-base font-medium rounded-full transition-all relative z-10 ${
+              isLogin ? 'text-white' : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            Login
+          </button>
+          <button
+            onClick={() => setIsLogin(false)}
+            className={`flex-1 px-6 py-3 text-base font-medium rounded-full transition-all relative z-10 ${
+              !isLogin ? 'text-white' : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            Sign Up
+          </button>
+        </div>
+
+        <form
+          className="mt-6 sm:mt-8 flex flex-col"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="rounded-md shadow-sm space-y-3 sm:space-y-4">
             <div>
-              <label htmlFor="email" className="sr-only">
-                이메일
-              </label>
               <input
                 id="email"
                 {...register('email', {
@@ -45,7 +93,7 @@ function LoginPage() {
                   },
                 })}
                 type="email"
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="appearance-none rounded-md relative block w-full px-3 py-2 sm:py-3 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm sm:text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 placeholder="이메일"
               />
               {errors.email && (
@@ -54,10 +102,8 @@ function LoginPage() {
                 </p>
               )}
             </div>
+
             <div>
-              <label htmlFor="password" className="sr-only">
-                비밀번호
-              </label>
               <input
                 id="password"
                 {...register('password', {
@@ -68,7 +114,7 @@ function LoginPage() {
                   },
                 })}
                 type="password"
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="appearance-none rounded-md relative block w-full px-3 py-2 sm:py-3 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm sm:text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 placeholder="비밀번호"
               />
               {errors.password && (
@@ -77,22 +123,106 @@ function LoginPage() {
                 </p>
               )}
             </div>
+
+            {!isLogin && (
+              <div>
+                <input
+                  id="passwordConfirm"
+                  {...register('passwordConfirm', {
+                    required: '비밀번호 확인을 입력해주세요',
+                    validate: value =>
+                      value === watch('password') ||
+                      '비밀번호가 일치하지 않습니다',
+                  })}
+                  type="password"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 sm:py-3 border border-gray-300 placeholder-gray-500 text-gray-900 text-sm sm:text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="비밀번호 확인"
+                />
+                {errors.passwordConfirm && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.passwordConfirm.message}
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
-          <div className="flex flex-col space-y-4">
+          <div className="mt-4">
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="w-full flex justify-center py-2 sm:py-3 px-4 border border-transparent text-sm sm:text-base font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
             >
-              로그인
+              {isLogin ? '로그인' : '회원가입'}
             </button>
-            <button
-              type="button"
-              onClick={() => router.push('/signup')}
-              className="group relative w-full flex justify-center py-2 px-4 border border-blue-600 text-sm font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              회원가입
-            </button>
+          </div>
+
+          <div className="mt-4 sm:mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-gray-50 text-gray-500">
+                  소셜 계정으로 계속하기
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 mb-4 sm:mb-0 flex flex-col sm:grid sm:grid-cols-3 gap-2 sm:gap-3">
+              <button
+                type="button"
+                onClick={() => console.log('카카오 로그인')}
+                className="w-full inline-flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-[#FEE500] hover:bg-[#FEE500]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FEE500]"
+              >
+                <img
+                  className="h-5 w-5 mr-2"
+                  src="/kakao-logo.png"
+                  alt="Kakao"
+                />
+                <span className="text-sm text-gray-900 sm:hidden">
+                  카카오 로그인
+                </span>
+                <span className="sr-only sm:not-sr-only sm:hidden">
+                  카카오 로그인
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => console.log('네이버 로그인')}
+                className="w-full inline-flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-[#03C75A] hover:bg-[#03C75A]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#03C75A]"
+              >
+                <img
+                  className="h-5 w-5 mr-2"
+                  src="/naver-logo.png"
+                  alt="Naver"
+                />
+                <span className="text-sm text-white sm:hidden">
+                  네이버 로그인
+                </span>
+                <span className="sr-only sm:not-sr-only sm:hidden">
+                  네이버 로그인
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => console.log('구글 로그인')}
+                className="w-full inline-flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4285f4]"
+              >
+                <img
+                  className="h-5 w-5 mr-2"
+                  src="/google-logo.png"
+                  alt="Google"
+                />
+                <span className="text-sm text-gray-900 sm:hidden">
+                  구글 로그인
+                </span>
+                <span className="sr-only sm:not-sr-only sm:hidden">
+                  구글 로그인
+                </span>
+              </button>
+            </div>
           </div>
         </form>
       </div>
