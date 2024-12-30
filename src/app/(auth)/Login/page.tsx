@@ -28,6 +28,14 @@ function LoginPage() {
     }
   };
 
+  console.log(process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID);
+  console.log(process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI);
+
+  const handleKakaoLogin = () => {
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div
@@ -171,7 +179,7 @@ function LoginPage() {
             <div className="mt-4 mb-4 sm:mb-0 flex flex-col sm:grid sm:grid-cols-3 gap-2 sm:gap-3">
               <button
                 type="button"
-                onClick={() => console.log('카카오 로그인')}
+                onClick={handleKakaoLogin}
                 className="w-full inline-flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-[#FEE500] hover:bg-[#FEE500]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FEE500]"
               >
                 <img
