@@ -42,70 +42,74 @@ function LearningSection() {
       {/* 배울점을 기록할 수 있는 공간 */}
       <div className="flex flex-col gap-1 mt-1">
         {learningPoints.map((point, index) => (
-          <div key={index} className="flex flex-row gap-2 items-center">
-            <Circle />
-            <input
-              ref={el => {
-                if (el) {
-                  itemsRef.current[index] = el;
-                }
-              }}
-              className="text-sm bg-[transparent] focus:outline-none w-full"
-              value={point}
-              onChange={e => {
-                const newLearningPoints = [...learningPoints];
-                newLearningPoints[index] = e.target.value;
-                setLearningPoints(newLearningPoints);
-              }}
-              onKeyDown={e => {
-                // 다음 칸으로 이동
-                if (e.key === 'Enter') {
-                  const nextIndex = index + 1;
-                  if (nextIndex < learningPoints.length) {
-                    itemsRef.current[nextIndex]?.focus();
-                  } else {
-                    inputRef.current?.focus();
+          <div
+            key={index}
+            className="flex flex-row gap-2 items-center justify-between"
+          >
+            <div className="flex flex-row gap-2 items-center">
+              <Circle />
+              <input
+                ref={el => {
+                  if (el) {
+                    itemsRef.current[index] = el;
                   }
-                }
-
-                if (e.key === 'ArrowUp') {
-                  const prevIndex = index - 1;
-                  if (prevIndex >= 0) {
-                    itemsRef.current[prevIndex]?.focus();
-                  }
-                }
-
-                if (e.key === 'ArrowDown') {
-                  const nextIndex = index + 1;
-                  if (nextIndex < learningPoints.length) {
-                    itemsRef.current[nextIndex]?.focus();
-                  }
-
-                  if (nextIndex === learningPoints.length) {
-                    inputRef.current?.focus();
-                  }
-                }
-
-                if (e.key === 'Backspace') {
-                  const prevIndex = index - 1;
-
-                  if (point.length === 0) {
-                    if (learningPoints.length === 1) {
-                      setFocus(inputRef.current);
+                }}
+                className="text-sm bg-[transparent] focus:outline-none w-full"
+                value={point}
+                onChange={e => {
+                  const newLearningPoints = [...learningPoints];
+                  newLearningPoints[index] = e.target.value;
+                  setLearningPoints(newLearningPoints);
+                }}
+                onKeyDown={e => {
+                  // 다음 칸으로 이동
+                  if (e.key === 'Enter') {
+                    const nextIndex = index + 1;
+                    if (nextIndex < learningPoints.length) {
+                      itemsRef.current[nextIndex]?.focus();
                     } else {
-                      setFocus(itemsRef.current[prevIndex]);
+                      inputRef.current?.focus();
                     }
-
-                    const newLearningPoints = [...learningPoints];
-                    newLearningPoints.splice(index, 1);
-                    setLearningPoints(newLearningPoints);
                   }
-                }
-              }}
-              onBlur={() => {
-                setLearningPoints([...learningPoints]);
-              }}
-            />
+                  if (e.key === 'ArrowUp') {
+                    const prevIndex = index - 1;
+                    if (prevIndex >= 0) {
+                      itemsRef.current[prevIndex]?.focus();
+                    }
+                  }
+                  if (e.key === 'ArrowDown') {
+                    const nextIndex = index + 1;
+                    if (nextIndex < learningPoints.length) {
+                      itemsRef.current[nextIndex]?.focus();
+                    }
+                    if (nextIndex === learningPoints.length) {
+                      inputRef.current?.focus();
+                    }
+                  }
+                  if (e.key === 'Backspace') {
+                    const prevIndex = index - 1;
+                    if (point.length === 0) {
+                      if (learningPoints.length === 1) {
+                        setFocus(inputRef.current);
+                      } else {
+                        setFocus(itemsRef.current[prevIndex]);
+                      }
+                      const newLearningPoints = [...learningPoints];
+                      newLearningPoints.splice(index, 1);
+                      setLearningPoints(newLearningPoints);
+                    }
+                  }
+                }}
+                onBlur={() => {
+                  setLearningPoints([...learningPoints]);
+                }}
+              />
+            </div>
+
+            {/* 기록 한 날짜 */}
+            <span className="text-sm text-gray-500 min-w-10">
+              {new Date().toLocaleDateString()}
+            </span>
           </div>
         ))}
       </div>
