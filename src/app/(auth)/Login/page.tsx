@@ -30,10 +30,16 @@ function LoginPage() {
 
   console.log(process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID);
   console.log(process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI);
-
+  
   const handleKakaoLogin = () => {
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
     window.location.href = KAKAO_AUTH_URL;
+  };
+
+  const handleNaverLogin = () => {
+    const state = Math.random().toString(36).substr(2, 11);
+    const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${state}`;
+    window.location.href = NAVER_AUTH_URL;
   };
 
   return (
@@ -197,7 +203,7 @@ function LoginPage() {
 
               <button
                 type="button"
-                onClick={() => console.log('네이버 로그인')}
+                onClick={handleNaverLogin}
                 className="w-full inline-flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-[#03C75A] hover:bg-[#03C75A]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#03C75A]"
               >
                 <img
