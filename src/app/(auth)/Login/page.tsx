@@ -28,9 +28,6 @@ function LoginPage() {
     }
   };
 
-  console.log(process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID);
-  console.log(process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI);
-  
   const handleKakaoLogin = () => {
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
     window.location.href = KAKAO_AUTH_URL;
@@ -40,6 +37,11 @@ function LoginPage() {
     const state = Math.random().toString(36).substr(2, 11);
     const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${state}`;
     window.location.href = NAVER_AUTH_URL;
+  };
+
+  const handleGithubLogin = () => {
+    const GITHUB_AUTH_URL = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI}&scope=user`;
+    window.location.href = GITHUB_AUTH_URL;
   };
 
   return (
@@ -221,19 +223,19 @@ function LoginPage() {
 
               <button
                 type="button"
-                onClick={() => console.log('구글 로그인')}
-                className="w-full inline-flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4285f4]"
+                onClick={handleGithubLogin}
+                className="w-full inline-flex items-center justify-center py-2.5 px-4 border border-gray-300 rounded-md shadow-sm bg-[#24292e] hover:bg-[#24292e]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#24292e]"
               >
                 <img
                   className="h-5 w-5 mr-2"
-                  src="/google-logo.png"
-                  alt="Google"
+                  src="/github-logo.png"
+                  alt="GitHub"
                 />
-                <span className="text-sm text-gray-900 sm:hidden">
-                  구글 로그인
+                <span className="text-sm text-white sm:hidden">
+                  깃허브 로그인
                 </span>
                 <span className="sr-only sm:not-sr-only sm:hidden">
-                  구글 로그인
+                  깃허브 로그인
                 </span>
               </button>
             </div>
