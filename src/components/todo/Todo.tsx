@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { BiSolidDownArrow } from 'react-icons/bi';
 import { cn } from '@/lib/utils';
@@ -25,6 +25,40 @@ interface TodoProps {
 
 function Todo({ title }: TodoProps) {
   const [todoList, setTodoList] = useState<ITodoList>(TODO_INITIAL_STATE);
+  console.log({ todoList });
+
+  // 현재 포스된 todo의 ref를 저장하기 위한 배열
+  const todoRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const handleKeyDown = useCallback(
+    (index: number, e: React.KeyboardEvent) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (index < todoList.todos.length - 1) {
+          todoRefs.current[index + 1]?.focus();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (index > 0) {
+          todoRefs.current[index - 1]?.focus();
+        }
+      } else if (e.key === 'Backspace' && todoList.todos[index].value === '') {
+        e.preventDefault();
+        // 첫 번째 todo이거나 todo가 하나만 있는 경우는 삭제하지 않음
+        if (index > 0) {
+          setTodoList(prev => ({
+            ...prev,
+            todos: prev.todos.filter((_, i) => i !== index),
+          }));
+          // 삭제 후 이전 todo로 포커스 이동
+          setTimeout(() => {
+            todoRefs.current[index - 1]?.focus();
+          }, 0);
+        }
+      }
+    },
+    [todoList.todos],
+  );
 
   const handleToggleComplete = useCallback((index: number) => {
     setTodoList(prev => ({
@@ -44,18 +78,24 @@ function Todo({ title }: TodoProps) {
     }));
   }, []);
 
-  const handleAddTodo = useCallback(() => {
-    setTodoList(prev => ({
-      ...prev,
-      todos: [
-        ...prev.todos,
-        {
-          id: uuidv4(),
-          value: '',
-          isCompleted: false,
-        },
-      ],
-    }));
+  const handleAddTodo = useCallback((index: number) => {
+    setTodoList(prev => {
+      const newTodos = [...prev.todos];
+      newTodos.splice(index + 1, 0, {
+        id: uuidv4(),
+        value: '',
+        isCompleted: false,
+      });
+      return {
+        ...prev,
+        todos: newTodos,
+      };
+    });
+
+    // NOTE: 새로운 todo가 생성된 후 다음 렌더링에서 포커스 이동
+    setTimeout(() => {
+      todoRefs.current[index + 1]?.focus();
+    }, 0);
   }, []);
 
   return (
@@ -87,9 +127,13 @@ function Todo({ title }: TodoProps) {
               key={todo.id}
               todo={todo}
               index={index}
+              ref={(el: HTMLInputElement | null) => {
+                todoRefs.current[index] = el;
+              }}
+              onKeyDown={e => handleKeyDown(index, e)}
               onToggleComplete={handleToggleComplete}
               onUpdateContent={handleUpdateContent}
-              onKeyPress={handleAddTodo}
+              onKeyPress={() => handleAddTodo(index)}
             />
           ))}
       </div>

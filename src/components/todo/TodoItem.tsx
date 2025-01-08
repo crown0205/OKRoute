@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { memo } from 'react';
+import { memo, forwardRef } from 'react';
 import { ITodo } from '@/types/todo';
 
 interface TodoItemProps {
@@ -8,16 +8,15 @@ interface TodoItemProps {
   onToggleComplete: (index: number) => void;
   onUpdateContent: (index: number, content: string) => void;
   onKeyPress: () => void;
+  onKeyDown: (e: React.KeyboardEvent) => void;
 }
 
-const TodoItem = memo(
-  ({
-    todo,
-    index,
-    onToggleComplete,
-    onUpdateContent,
-    onKeyPress,
-  }: TodoItemProps) => {
+const TodoItem = forwardRef<HTMLInputElement, TodoItemProps>(
+  (
+    { todo, index, onToggleComplete, onUpdateContent, onKeyPress, onKeyDown },
+    ref,
+  ) => {
+    console.log({ todo: todo.id });
     return (
       <div className="flex flex-row gap-2 items-center">
         <input
@@ -26,6 +25,7 @@ const TodoItem = memo(
           onChange={() => onToggleComplete(index)}
         />
         <input
+          ref={ref}
           className={cn(
             'flex-1 bg-transparent focus:outline-none',
             todo.isCompleted && 'text-gray-500 line-through',
@@ -34,9 +34,8 @@ const TodoItem = memo(
           placeholder="할 일"
           onChange={e => onUpdateContent(index, e.target.value)}
           onKeyDown={e => {
-            if (e.key === 'Enter') {
-              onKeyPress();
-            }
+            if (e.key === 'Enter') onKeyPress();
+            onKeyDown(e);
           }}
         />
       </div>
