@@ -8,7 +8,7 @@ function TodoSection() {
         <Title>Todo</Title>
       </div>
 
-      <div className="flex flex-row gap-4 mt-4">
+      <div className="flex flex-col sm:flex-row gap-4 mt-4">
         <Todo title="Personal" />
         <Todo title="Work" />
       </div>
