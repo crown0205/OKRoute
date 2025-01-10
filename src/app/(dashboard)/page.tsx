@@ -1,7 +1,3 @@
-import { Title } from '@/components/common';
-import OKRSection from '@/components/okr/OKRSection';
-import TodoSection from '@/components/todo/TodoSection';
-
 const mainLinks = [
   { href: '/', label: 'Home' },
   { href: '/learning', label: 'Learning' },

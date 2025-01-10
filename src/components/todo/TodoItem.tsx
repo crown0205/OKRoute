@@ -1,6 +1,5 @@
-import { cn } from '@/lib/utils';
-import { memo, forwardRef } from 'react';
 import { ITodo } from '@/types/todo';
+import { forwardRef } from 'react';
 
 interface TodoItemProps {
   todo: ITodo;
@@ -17,7 +16,7 @@ const TodoItem = forwardRef<HTMLInputElement, TodoItemProps>(
     ref,
   ) => {
     return (
-      <div className="flex items-center gap-3 p-3 bg-neutral-50 dark:bg-neutral-900 rounded-lg group hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all">
+      <div className="flex items-center gap-3 p-3 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg group hover:bg-neutral-100 dark:hover:bg-neutral-950/50 transition-all">
         <button
           onClick={() => onToggleComplete(index)}
           className="relative w-5 h-5 flex-shrink-0"
@@ -51,12 +50,10 @@ const TodoItem = forwardRef<HTMLInputElement, TodoItemProps>(
         </button>
         <input
           ref={ref}
-          className={cn(
-            'flex-1 bg-transparent focus:outline-none',
-            todo.isCompleted && 'text-gray-500 line-through',
-          )}
+          type="text"
+          className="flex-1 bg-transparent text-sm text-neutral-700 dark:text-neutral-200 placeholder-neutral-400 focus:outline-none"
+          placeholder="할 일을 입력하세요"
           value={todo.value}
-          placeholder="할 일"
           onChange={e => onUpdateContent(index, e.target.value)}
           onKeyDown={onKeyDown}
         />
