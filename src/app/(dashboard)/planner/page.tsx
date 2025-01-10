@@ -128,7 +128,7 @@ function PlannerPage() {
   };
 
   return (
-    <div className="flex-1 w-full h-full mx-auto bg-white dark:bg-neutral-800 rounded-xl p-8 shadow-lg">
+    <div className="flex-1 w-full h-full mx-auto bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-neutral-800 dark:text-white mb-1">
@@ -183,10 +183,13 @@ function PlannerPage() {
               </div>
             </div>
 
-            {/* 주차별 할 일 */}
-            <div className="grid grid-cols-4 gap-4">
+            {/* 주차별 할 일 - 모바일에서는 1열, 태블릿/데스크톱에서는 4열 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[1, 2, 3, 4].map(week => (
-                <div key={week} className="flex flex-col gap-2">
+                <div
+                  key={week}
+                  className="flex flex-col gap-2 bg-neutral-50 dark:bg-neutral-900/50 p-3 rounded-lg"
+                >
                   <div className="flex items-center justify-between">
                     <h4 className="font-medium text-neutral-700 dark:text-neutral-200">
                       {week}주차
