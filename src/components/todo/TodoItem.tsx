@@ -16,7 +16,6 @@ const TodoItem = forwardRef<HTMLInputElement, TodoItemProps>(
     { todo, index, onToggleComplete, onUpdateContent, onKeyPress, onKeyDown },
     ref,
   ) => {
-    console.log({ todo: todo.id });
     return (
       <div className="flex flex-row gap-2 items-center">
         <input
@@ -33,10 +32,7 @@ const TodoItem = forwardRef<HTMLInputElement, TodoItemProps>(
           value={todo.value}
           placeholder="할 일"
           onChange={e => onUpdateContent(index, e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter') onKeyPress();
-            onKeyDown(e);
-          }}
+          onKeyDown={onKeyDown}
         />
       </div>
     );
