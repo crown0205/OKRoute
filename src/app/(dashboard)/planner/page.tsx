@@ -52,6 +52,9 @@ function PlannerPage() {
 
   const todoRefs = useRef<{ [key: string]: HTMLTextAreaElement | null }>({});
 
+  // 뷰 타입 상태 추가
+  const [viewType, setViewType] = useState<'month' | 'week'>('month');
+
   // 새로운 할 일 추가 함수
   const addTodo = (month: number, week: number) => {
     const newId = uuidv4();
@@ -129,6 +132,23 @@ function PlannerPage() {
 
   return (
     <div className="flex-1 w-full h-full mx-auto bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
+      <div className="flex items-center mb-6 gap-4">
+        {['month', 'week'].map(item => (
+          <button
+            key={item}
+            onClick={() => setViewType(item as 'month' | 'week')}
+            className={`text-sm border rounded-md px-2 py-1 mb-1 transition-colors
+              ${
+                viewType === item
+                  ? 'border-blue-500 bg-blue-500 text-white'
+                  : 'border-neutral-800 dark:border-neutral-500 text-neutral-800 dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900/50'
+              }`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-neutral-800 dark:text-white mb-1">
