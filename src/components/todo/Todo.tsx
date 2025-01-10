@@ -4,7 +4,6 @@ import { useTodoHandlers } from '@/hooks/useTodoHandlers';
 import { ITodo, ITodoList } from '@/types/todo';
 import { useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { TodoHeader } from './TodoHeader';
 import TodoItem from './TodoItem';
 
 const createInitialTodo = (): ITodo => ({
@@ -26,6 +25,7 @@ interface TodoProps {
 function Todo({ title }: TodoProps) {
   const [todoList, setTodoList] = useState<ITodoList>(TODO_INITIAL_STATE);
   const todoRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [isShowCompleted, setIsShowCompleted] = useState(true);
 
   const {
     handleKeyDown,
@@ -42,7 +42,7 @@ function Todo({ title }: TodoProps) {
   }, []);
 
   return (
-    <div className="flex-1 bg-white dark:bg-neutral-800 rounded-xl p-8 shadow-lg">
+    <div className="flex-1 max-w-3xl w-full mx-auto bg-white dark:bg-neutral-800 rounded-xl p-8 shadow-lg">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-neutral-800 dark:text-white mb-1">
@@ -54,16 +54,17 @@ function Todo({ title }: TodoProps) {
           </p>
         </div>
         <button
-          onClick={handleToggleShow}
-          className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+          onClick={() => setIsShowCompleted(!isShowCompleted)}
+          className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 text-sm"
         >
-          {todoList.isShowTodo ? '숨기기' : '보이기'}
+          {isShowCompleted ? '완료된 항목 숨기기' : '완료된 항목 보기'}
         </button>
       </div>
 
-      <div className="flex flex-col gap-2">
-        {todoList.isShowTodo &&
-          todoList.todos.map((todo, index) => (
+      <div className="flex flex-col gap-4 w-full">
+        {todoList.todos
+          .filter(todo => !todo.isCompleted || isShowCompleted)
+          .map((todo, index) => (
             <TodoItem
               key={todo.id}
               todo={todo}
