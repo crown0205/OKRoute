@@ -14,7 +14,7 @@ const mainLinks = [
 
 function DashboardPage() {
   return (
-    <div className="max-w-7xl mx-auto">
+    <div>
       {/* 헤더 영역 */}
       <div className="py-8">
         <h1 className="text-4xl font-bold mb-6">OKRoute Dashboard</h1>
