@@ -112,7 +112,9 @@ function PlannerPage() {
   ) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
+      e.stopPropagation(); // 이벤트 전파 중지
       addTodo(month, week);
+      return; // 함수 실행 종료
     }
 
     if (e.key === 'Backspace' && todo.text === '') {
@@ -145,6 +147,67 @@ function PlannerPage() {
         ),
       },
     }));
+  };
+
+  // Progress Circle 컴포넌트 추가
+  const ProgressCircle = ({
+    completed,
+    total,
+  }: {
+    completed: number;
+    total: number;
+  }) => {
+    const percentage = total === 0 ? 0 : (completed / total) * 100;
+    const radius = 15.91549430918954;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDasharray = `${circumference} ${circumference}`;
+    const roundedPercentage = Math.round(percentage);
+
+    return (
+      <div className="w-8 h-8 relative group">
+        <svg
+          className="w-full h-full -rotate-90"
+          viewBox="0 0 36 36"
+          role="progressbar"
+          aria-valuenow={roundedPercentage}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          {/* 배경 서클 */}
+          <circle
+            cx="18"
+            cy="18"
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            className="text-neutral-200 dark:text-neutral-700"
+          />
+          {/* 프로그레스 서클 */}
+          <circle
+            cx="18"
+            cy="18"
+            r={radius}
+            fill="none"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeDasharray={strokeDasharray}
+            className="text-blue-500"
+            stroke="currentColor"
+            style={{
+              strokeDashoffset: circumference * (1 - percentage / 100),
+              transition: 'stroke-dashoffset 0.5s ease-in-out',
+            }}
+          />
+        </svg>
+        {/* 중앙 텍스트를 SVG 밖으로 이동하고 absolute 포지셔닝 사용 */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-[14px] sm:text-[10px] font-medium text-neutral-700 dark:text-neutral-200">
+            {roundedPercentage}%
+          </span>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -247,9 +310,22 @@ function PlannerPage() {
                     className="flex flex-col gap-2 bg-neutral-50 dark:bg-neutral-900/50 p-3 rounded-lg"
                   >
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-neutral-700 dark:text-neutral-200">
-                        {week}주차
-                      </h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-medium text-neutral-700 dark:text-neutral-200">
+                          {week}주차
+                        </h4>
+                        <ProgressCircle
+                          completed={
+                            weeklyTodos[month][week].filter(
+                              todo => todo.completed && todo.text,
+                            ).length
+                          }
+                          total={
+                            weeklyTodos[month][week].filter(todo => todo.text)
+                              .length
+                          }
+                        />
+                      </div>
                       <button
                         onClick={() => addTodo(month, week)}
                         className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
