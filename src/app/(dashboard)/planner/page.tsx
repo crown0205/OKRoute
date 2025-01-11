@@ -337,26 +337,47 @@ function PlannerPage() {
                       {weeklyTodos[month][week].map((todo, index) => (
                         <div
                           key={todo.id}
-                          className="group flex items-center gap-2 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 rounded-md transition-colors relative"
+                          className="group flex items-center gap-2 p-2 hover:bg-white dark:hover:bg-neutral-800 rounded-md transition-colors relative"
                         >
-                          <input
-                            type="checkbox"
-                            checked={todo.completed}
-                            onChange={() => {
-                              setWeeklyTodos(prev => ({
-                                ...prev,
-                                [month]: {
-                                  ...prev[month],
-                                  [week]: prev[month][week].map(t =>
-                                    t.id === todo.id
-                                      ? { ...t, completed: !t.completed }
-                                      : t,
-                                  ),
-                                },
-                              }));
-                            }}
-                            className="rounded border-neutral-300 dark:border-neutral-600 text-blue-500 focus:ring-blue-500"
-                          />
+                          <div className="relative flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={todo.completed}
+                              onChange={() => {
+                                setWeeklyTodos(prev => ({
+                                  ...prev,
+                                  [month]: {
+                                    ...prev[month],
+                                    [week]: prev[month][week].map(t =>
+                                      t.id === todo.id
+                                        ? { ...t, completed: !t.completed }
+                                        : t,
+                                    ),
+                                  },
+                                }));
+                              }}
+                              className="peer w-[18px] h-[18px] rounded-full border-[1.5px] border-neutral-300 dark:border-neutral-600 
+                              appearance-none cursor-pointer transition-all duration-200 ease-in-out
+                              checked:border-blue-500 checked:bg-blue-500
+                              hover:border-blue-500 dark:hover:border-blue-400
+                              focus:ring-2 focus:ring-offset-0 focus:ring-blue-500/20 focus:outline-none
+                              disabled:opacity-50 disabled:cursor-not-allowed
+                              dark:bg-neutral-800"
+                            />
+                            <svg
+                              className="absolute left-[3px] w-3 h-3 pointer-events-none opacity-0 
+                              peer-checked:opacity-100 text-white transition-all duration-200
+                              peer-checked:scale-100 scale-75"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="3.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </div>
                           <textarea
                             ref={(el: HTMLTextAreaElement | null) => {
                               todoRefs.current[todo.id] = el;
@@ -374,7 +395,8 @@ function PlannerPage() {
                               handleKeyDown(e, month, week, todo, index)
                             }
                             placeholder="할 일을 입력하세요"
-                            className={`flex-1 bg-transparent text-sm focus:outline-none resize-none w-full ${
+                            className={`flex-1 bg-transparent text-sm focus:outline-none resize-none w-full placeholder:text-neutral-400
+                            ${
                               todo.completed
                                 ? 'line-through text-neutral-400'
                                 : 'text-neutral-700 dark:text-neutral-200'
