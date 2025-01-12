@@ -18,35 +18,41 @@ function LearningSection() {
   };
 
   return (
-    <div className="flex flex-col max-w-screen-md mb-6">
-      <div className="flex flex-row gap-2 items-center">
-        <Title>Learning points</Title>
-        <button
-          className="text-sm text-gray-500 p-1"
-          onClick={() => setIsShowDescription(!isShowDescription)}
-        >
-          {isShowDescription ? '➖' : '➕'}
-        </button>
+    <div className="flex-1 max-w-3xl w-full h-full mx-auto bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-4 sm:mb-6">
+        <div className="flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-semibold text-neutral-900 dark:text-white">
+            Learning points
+          </h1>
+          <button
+            onClick={() => setIsShowDescription(!isShowDescription)}
+            className="flex items-center justify-center w-6 h-6 text-neutral-500 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400"
+          >
+            {isShowDescription ? '−' : '+'}
+          </button>
+        </div>
+        <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-500">
+          {learningPoints.length} points recorded
+        </p>
       </div>
 
       {isShowDescription && (
-        <CardLayout>
+        <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg">
           <InfoMessage>
             {`이곳에 이번 쿼터에서 배운 점들을 생각 날때마다 기록합니다.
               짧은 문장이여도 좋고, 문단이여도 좋습니다.
               기록함으로써 배운 것들을 훨씬 강화 시킵니다.`}
           </InfoMessage>
-        </CardLayout>
+        </div>
       )}
 
-      {/* 배울점을 기록할 수 있는 공간 */}
-      <div className="flex flex-col gap-1 mt-1">
+      <div className="flex flex-col gap-2 w-full">
         {learningPoints.map((point, index) => (
           <div
             key={index}
-            className="flex flex-row gap-2 items-center justify-between"
+            className="flex flex-col sm:flex-row gap-2 items-start sm:items-center justify-between p-2 sm:p-3 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg"
           >
-            <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-row gap-2 items-center flex-1 w-full">
               <Circle />
               <input
                 ref={el => {
@@ -54,7 +60,7 @@ function LearningSection() {
                     itemsRef.current[index] = el;
                   }
                 }}
-                className="text-sm bg-[transparent] focus:outline-none w-full"
+                className="text-xs sm:text-sm bg-[transparent] focus:outline-none w-full text-neutral-800 dark:text-white"
                 value={point}
                 onChange={e => {
                   const newLearningPoints = [...learningPoints];
@@ -105,9 +111,7 @@ function LearningSection() {
                 }}
               />
             </div>
-
-            {/* 기록 한 날짜 */}
-            <span className="text-sm text-gray-500 min-w-10">
+            <span className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-500 ml-6 sm:ml-0">
               {new Date().toLocaleDateString()}
             </span>
           </div>
@@ -116,7 +120,7 @@ function LearningSection() {
 
       <input
         ref={inputRef}
-        className="bg-[transparent] focus:outline-none text-sm mt-1"
+        className="w-full p-2 sm:p-3 mt-4 bg-neutral-50 dark:bg-neutral-900/50 rounded-lg text-xs sm:text-sm focus:outline-none text-neutral-800 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-500"
         placeholder="배울점을 기록해보세요."
         value={input}
         onChange={e => setInput(e.target.value)}
