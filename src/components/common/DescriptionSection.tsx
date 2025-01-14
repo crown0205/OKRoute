@@ -14,7 +14,7 @@ function DescriptionSection({ title, description }: DescriptionSectionProps) {
   const [isShow, setIsShow] = useState<boolean>(true);
 
   return (
-    <div className="flex flex-col gap-2 w-[50%] p-2 border-[1px] border-[#cacaca] rounded-md">
+    <div className="flex flex-col gap-2 w-full md:w-[50%] p-2 border-[1px] border-neutral-300 dark:border-neutral-600 rounded-md">
       <div className="flex flex-row items-center flex-1 gap-2">
         <button className="py-1" onClick={() => setIsShow(!isShow)}>
           <BiSolidDownArrow
@@ -30,11 +30,11 @@ function DescriptionSection({ title, description }: DescriptionSectionProps) {
       </div>
 
       {isShow && (
-        <div className={cn('flex flex-col gap-2 flex-1 pl-4')}>
+        <div className={cn('flex flex-col gap-2 flex-1 pl-2 md:pl-4')}>
           {description.map(desc => (
             <div key={desc} className="flex flex-row items-center">
-              <Circle className="dark:bg-neutral-400 mr-2" />
-              <span className="text-sm text-neutral-700 dark:text-neutral-200 whitespace-pre-line break-keep ">
+              <Circle className="dark:bg-neutral-400 mr-1 md:mr-2" />
+              <span className="text-xs md:text-sm text-neutral-700 dark:text-neutral-200 whitespace-pre-line break-keep">
                 {desc}
               </span>
             </div>
