@@ -32,52 +32,59 @@ function OKRSection() {
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true);
 
   return (
-    <div className="mb-4 flex flex-col gap-2">
-      <div className="flex flex-row gap-2 items-center">
-        <Title>OKR</Title>
-        <button
-          className="text-sm text-gray-500 p-1"
-          onClick={() => setIsShowDescription(!isShowDescription)}
-        >
-          {isShowDescription ? <FaMinus /> : <FaPlus />}
-        </button>
-      </div>
-
-      {isShowDescription && (
-        <CardLayout>
-          <div className="flex flex-col gap-2">
-            <InfoMessage>3개 이하의 OKR에 집중 합니다.</InfoMessage>
-
-            <div className="flex flex-col gap-2 pl-4">
-              {description.map(desc => (
-                <div key={desc} className="flex flex-row gap-2 items-center">
-                  <Circle className="dark:bg-[#000]" />
-                  <span className="text-sm whitespace-pre-line break-keep text-[#000]">
-                    {desc}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-row gap-4 items-start">
-              <DescriptionSection
-                title={`Objective`}
-                description={objective_description}
-              />
-
-              <DescriptionSection
-                title={`Key Results`}
-                description={key_result_description}
-              />
-            </div>
+    <div className="flex-1 max-w-7xl w-full mx-auto">
+      <div className="flex flex-col gap-4">
+        {/* 설명 섹션 */}
+        <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
+          <div className="flex flex-row gap-2 items-center mb-4">
+            <Title className="text-neutral-900 dark:text-white">OKR</Title>
+            <button
+              className="text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-400 p-1"
+              onClick={() => setIsShowDescription(!isShowDescription)}
+            >
+              {isShowDescription ? <FaMinus /> : <FaPlus />}
+            </button>
           </div>
-        </CardLayout>
-      )}
 
-      <div className="flex flex-row gap-4 mt-4">
-        <OKR title="Personal OKR" />
+          {isShowDescription && (
+            <CardLayout className="bg-neutral-50 dark:bg-neutral-900/50">
+              <div className="flex flex-col gap-4">
+                <InfoMessage>3개 이하의 OKR에 집중 합니다.</InfoMessage>
 
-        <OKR title="Work OKR" />
+                <div className="flex flex-col gap-2 pl-4">
+                  {description.map(desc => (
+                    <div
+                      key={desc}
+                      className="flex flex-row gap-2 items-center"
+                    >
+                      <Circle className="dark:bg-neutral-400" />
+                      <span className="text-sm whitespace-pre-line break-keep text-neutral-700 dark:text-neutral-200">
+                        {desc}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-row gap-4 items-start">
+                  <DescriptionSection
+                    title="Objective"
+                    description={objective_description}
+                  />
+                  <DescriptionSection
+                    title="Key Results"
+                    description={key_result_description}
+                  />
+                </div>
+              </div>
+            </CardLayout>
+          )}
+        </div>
+
+        {/* OKR 섹션 */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <OKR title="Personal OKR" />
+          <OKR title="Work OKR" />
+        </div>
       </div>
     </div>
   );

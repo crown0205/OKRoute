@@ -19,12 +19,12 @@ function DescriptionSection({ title, description }: DescriptionSectionProps) {
         <button className="py-1" onClick={() => setIsShow(!isShow)}>
           <BiSolidDownArrow
             className={cn(
-              'text-[#000] transition-transform duration-200',
+              'text-neutral-700 dark:text-neutral-200 transition-transform duration-200',
               !isShow ? '-rotate-90' : '',
             )}
           />
         </button>
-        <span className="text-sm text-[#000] whitespace-pre-line font-bold">
+        <span className="text-sm text-neutral-700 dark:text-neutral-200 whitespace-pre-line font-bold">
           {title}
         </span>
       </div>
@@ -33,8 +33,8 @@ function DescriptionSection({ title, description }: DescriptionSectionProps) {
         <div className={cn('flex flex-col gap-2 flex-1 pl-4')}>
           {description.map(desc => (
             <div key={desc} className="flex flex-row items-center">
-              <Circle className="dark:bg-[#000] mr-2" />
-              <span className="text-sm text-gray-500 whitespace-pre-line break-keep ">
+              <Circle className="dark:bg-neutral-400 mr-2" />
+              <span className="text-sm text-neutral-700 dark:text-neutral-200 whitespace-pre-line break-keep ">
                 {desc}
               </span>
             </div>
