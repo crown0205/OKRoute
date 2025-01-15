@@ -28,15 +28,44 @@ const key_result_description = [
   '목적: 주요 결과는 성공을 측정하고 목표 달성의 진척 상황을 추적하는 수단을 제공합니다.',
 ];
 
+// 상단에 타입 정의 추가
+type ProgressBarProps = {
+  title: string;
+  percentage: number;
+};
+
+const ProgressBar = ({ title, percentage }: ProgressBarProps) => (
+  <div className="flex flex-col gap-2">
+    <div className="flex justify-between items-center">
+      <span className="text-sm font-medium text-neutral-700 dark:text-neutral-200">
+        {title}
+      </span>
+      <span className="text-sm font-medium text-neutral-700 dark:text-neutral-200">
+        {percentage}%
+      </span>
+    </div>
+    <div className="w-full bg-neutral-200 dark:bg-neutral-700 rounded-full h-4">
+      <div
+        className="bg-blue-600 h-4 rounded-full transition-all duration-300"
+        style={{ width: `${percentage}%` }}
+      />
+    </div>
+  </div>
+);
+
 function OKRSection() {
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true);
+
+  // 진행률 상태 추가
+  const [personalProgress, setPersonalProgress] = useState<number>(65);
+  const [workProgress, setWorkProgress] = useState<number>(40);
 
   return (
     <div className="flex-1 max-w-7xl w-full mx-auto">
       <div className="flex flex-col gap-4">
         {/* 설명 섹션 */}
         <div className="bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
-          <div className="flex flex-row gap-2 items-center mb-4">
+          <div className="flex flex-row gap-2 items-center ">
             <Title className="text-neutral-900 dark:text-white">OKR</Title>
             <button
               className="text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-400 p-1"
@@ -65,7 +94,7 @@ function OKRSection() {
                   ))}
                 </div>
 
-                <div className="flex flex-row gap-4 items-start">
+                <div className="flex flex-col md:flex-row gap-4 items-start">
                   <DescriptionSection
                     title="Objective"
                     description={objective_description}
@@ -78,10 +107,22 @@ function OKRSection() {
               </div>
             </CardLayout>
           )}
+
+          {/* OKR 진행률 그래프 */}
+          <div className="flex flex-col gap-2">
+            <Title className="text-neutral-900 dark:text-white">
+              OKR 진행률
+            </Title>
+
+            <div className="flex flex-col gap-4">
+              <ProgressBar title="Personal OKR" percentage={personalProgress} />
+              <ProgressBar title="Work OKR" percentage={workProgress} />
+            </div>
+          </div>
         </div>
 
         {/* OKR 섹션 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <OKR title="Personal OKR" />
           <OKR title="Work OKR" />
         </div>
