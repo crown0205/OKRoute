@@ -1,6 +1,6 @@
 function ReflectionPage() {
   return (
-    <div className="min-h-screen text-white p-8 space-y-12 max-w-5xl mx-auto">
+    <div className="w-full mx-auto">
       {/* 2025 Q1 섹션 */}
       <section>
         <h1 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b border-gray-700 pb-2">
