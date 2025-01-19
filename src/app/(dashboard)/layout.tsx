@@ -2,6 +2,7 @@
 
 import Header from '@/components/common/Header';
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const mainLinks = [
   { href: '/', label: 'Home' },
@@ -13,9 +14,37 @@ const mainLinks = [
   // { href: '/settings', label: 'Settings' },
 ];
 
+const quotes = [
+  { text: '살아 있는 한 희망은 있다', author: '키케로' },
+  { text: '노력은 배신하지 않는다', author: '박지성' },
+  { text: '실패는 성공의 어머니다', author: '토마스 에디슨' },
+  { text: '시작이 반이다', author: '아리스토텔레스' },
+  {
+    text: '오늘 할 수 있는 일을 내일로 미루지 마라',
+    author: '벤자민 프랭클린',
+  },
+];
+
 function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const currentLink = mainLinks.find(link => link.href === pathname);
+
+  const [quoteIndex, setQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    // 초기 인덱스 설정
+    setQuoteIndex(Math.floor(Math.random() * quotes.length));
+
+    // 10분마다 인덱스 변경
+    const interval = setInterval(() => {
+      setQuoteIndex(prevIndex => (prevIndex + 1) % quotes.length);
+    }, 600000); // 10분 = 600000ms
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentQuote = quotes[quoteIndex];
+
   return (
     <div className="flex flex-col gap-2 sm:gap-2 p-2 sm:p-4 max-w-screen-lg mx-auto w-full">
       <Header />
@@ -49,7 +78,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
             <span className="text-blue-500">💡</span> 오늘의 명언
           </h2>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 italic">
-            &quot;살아 있는 한 희망은 있다&quot; - 키케로
+            &quot;{currentQuote.text}&quot; - {currentQuote.author}
           </p>
         </div>
 
