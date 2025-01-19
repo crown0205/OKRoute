@@ -29,15 +29,16 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const currentLink = mainLinks.find(link => link.href === pathname);
 
-  const [quoteIndex, setQuoteIndex] = useState(
-    () => Math.floor(Math.random() * quotes.length), // 초기값을 lazy initialization으로 설정
-  );
+  // 초기값을 0으로 고정
+  const [quoteIndex, setQuoteIndex] = useState(0);
 
   // 현재 명언을 메모이제이션
   const currentQuote = useMemo(() => quotes[quoteIndex], [quoteIndex]);
 
   useEffect(() => {
-    // 초기 랜덤 설정은 useState의 lazy initialization으로 이동했으므로 제거
+    // 클라이언트에서만 랜덤 인덱스 설정
+    setQuoteIndex(Math.floor(Math.random() * quotes.length));
+
     const interval = setInterval(() => {
       setQuoteIndex(prev => (prev + 1) % quotes.length);
     }, 600000);
