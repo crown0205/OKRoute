@@ -2,7 +2,7 @@
 
 import Header from '@/components/common/Header';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const mainLinks = [
   { href: '/', label: 'Home' },
@@ -31,19 +31,19 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   const [quoteIndex, setQuoteIndex] = useState(0);
 
-  useEffect(() => {
-    // 초기 인덱스 설정
-    setQuoteIndex(Math.floor(Math.random() * quotes.length));
+  // 현재 명언을 메모이제이션
+  const currentQuote = useMemo(() => quotes[quoteIndex], [quoteIndex]);
 
-    // 10분마다 인덱스 변경
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    setQuoteIndex(randomIndex);
+
     const interval = setInterval(() => {
-      setQuoteIndex(prevIndex => (prevIndex + 1) % quotes.length);
-    }, 600000); // 10분 = 600000ms
+      setQuoteIndex(prev => (prev + 1) % quotes.length);
+    }, 600000);
 
     return () => clearInterval(interval);
-  }, []);
-
-  const currentQuote = quotes[quoteIndex];
+  }, []); // quotes는 상수이므로 의존성 배열에서 제외
 
   return (
     <div className="flex flex-col gap-2 sm:gap-2 p-2 sm:p-4 max-w-screen-lg mx-auto w-full">
