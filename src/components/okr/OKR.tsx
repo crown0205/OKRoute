@@ -77,7 +77,7 @@ function OKR({ title }: { title: string }) {
   };
 
   return (
-    <div className="flex-1 max-w-3xl w-full min-h-auto mx-auto bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
+    <div className="flex-1 max-w-3xl w-full max-h-fit mx-auto bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-4 sm:mb-6">
         <Title className="text-neutral-900 dark:text-white">
           {title}{' '}
