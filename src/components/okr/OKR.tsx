@@ -58,6 +58,13 @@ function OKR({ title }: { title: string }) {
                 className="flex-1 text-sm whitespace-pre-line break-keep text-neutral-800 dark:text-white bg-transparent focus:outline-none"
                 value={okr.objective}
                 placeholder="목표를 입력하세요"
+                onChange={e => {
+                  setOkrs(prev =>
+                    prev.map((o, i) =>
+                      i === okrIndex ? { ...o, objective: e.target.value } : o,
+                    ),
+                  );
+                }}
               />
             </div>
           </CardLayout>
@@ -149,6 +156,22 @@ function OKR({ title }: { title: string }) {
                       )}
                       value={keyResult.value}
                       placeholder="핵심 결과를 입력하세요"
+                      onChange={e => {
+                        setOkrs(prev =>
+                          prev.map((o, i) =>
+                            i === okrIndex
+                              ? {
+                                  ...o,
+                                  keyResults: o.keyResults.map((kr, kri) =>
+                                    kri === keyResultIndex
+                                      ? { ...kr, value: e.target.value }
+                                      : kr,
+                                  ),
+                                }
+                              : o,
+                          ),
+                        );
+                      }}
                     />
                   </div>
                 ))}
