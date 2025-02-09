@@ -123,8 +123,8 @@ function OKRSection() {
 
         {/* OKR 섹션 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <OKR title="Personal OKR" />
-          <OKR title="Work OKR" />
+          <OKR title="Personal OKR" category="personal" />
+          <OKR title="Work OKR" category="work" />
         </div>
       </div>
     </div>

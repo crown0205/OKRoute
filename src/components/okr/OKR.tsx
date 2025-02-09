@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BiSolidDownArrow } from 'react-icons/bi';
 import { v4 as uuidv4 } from 'uuid';
 import { Title } from '../common';
@@ -8,6 +8,7 @@ import { ObjectiveInput } from './ObjectiveInput';
 
 // types를 별도로 분리
 interface KeyResult {
+  id: string;
   value: string;
   isChecked: boolean;
   paddingLeft: number;
@@ -15,27 +16,40 @@ interface KeyResult {
 
 interface IOKR {
   id: string;
+  category: 'work' | 'personal';
   objective: string;
   keyResults: KeyResult[];
   isShowOKR: boolean;
 }
 
 const OKR_INITIAL_STATE: Omit<IOKR, 'id'> = {
+  category: 'work',
   objective: '',
   keyResults: [
-    { value: '', isChecked: false, paddingLeft: 0 },
-    { value: '', isChecked: false, paddingLeft: 0 },
+    { id: uuidv4(), value: '', isChecked: false, paddingLeft: 0 },
+    { id: uuidv4(), value: '', isChecked: false, paddingLeft: 0 },
   ],
   isShowOKR: true,
 };
 
-function OKR({ title }: { title: string }) {
-  const [okrs, setOkrs] = useState<IOKR[]>([
-    {
-      id: uuidv4(),
-      ...OKR_INITIAL_STATE,
-    },
-  ]);
+function OKR({
+  title,
+  category,
+}: {
+  title: string;
+  category: 'work' | 'personal';
+}) {
+  const [okrs, setOkrs] = useState<IOKR[]>(() => {
+    return [
+      {
+        id: uuidv4(),
+        ...OKR_INITIAL_STATE,
+        category,
+      },
+    ];
+  });
+
+  console.log({ okrs });
 
   const handleAddOKR = () => {
     if (okrs.length >= 3) return;
@@ -45,6 +59,7 @@ function OKR({ title }: { title: string }) {
       {
         id: uuidv4(),
         ...OKR_INITIAL_STATE,
+        category,
       },
     ]);
   };
@@ -117,7 +132,7 @@ function OKR({ title }: { title: string }) {
                 <div className="space-y-2">
                   {okr.keyResults.map((keyResult, keyResultIndex) => (
                     <KeyResultItem
-                      key={keyResultIndex}
+                      key={keyResult.id}
                       keyResult={keyResult}
                       onToggleCheck={() =>
                         updateKeyResult(okrIndex, keyResultIndex, {
