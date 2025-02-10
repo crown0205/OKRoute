@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { BiSolidDownArrow } from 'react-icons/bi';
 import { v4 as uuidv4 } from 'uuid';
 import { Title } from '../common';
@@ -95,6 +95,23 @@ function OKR({
     setOkrs(prev => prev.filter((_, index) => index !== okrIndex));
   };
 
+  const addKeyResult = (okrIndex: number, keyResultIndex: number) => {
+    setOkrs(prev =>
+      prev.map((okr, index) =>
+        index === okrIndex
+          ? {
+              ...okr,
+              keyResults: [
+                ...okr.keyResults.slice(0, keyResultIndex + 1),
+                { id: uuidv4(), value: '', isChecked: false, paddingLeft: 0 },
+                ...okr.keyResults.slice(keyResultIndex + 1),
+              ],
+            }
+          : okr,
+      ),
+    );
+  };
+
   return (
     <div className="flex-1 max-w-3xl w-full max-h-fit mx-auto bg-white dark:bg-neutral-800 rounded-xl p-4 sm:p-8 shadow-lg">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-6 sm:mb-8">
@@ -143,6 +160,8 @@ function OKR({
                       <KeyResultItem
                         key={keyResult.id}
                         keyResult={keyResult}
+                        okrIndex={okrIndex}
+                        keyResultIndex={keyResultIndex}
                         onToggleCheck={() =>
                           updateKeyResult(okrIndex, keyResultIndex, {
                             isChecked: !keyResult.isChecked,
@@ -151,6 +170,25 @@ function OKR({
                         onChangeValue={value =>
                           updateKeyResult(okrIndex, keyResultIndex, { value })
                         }
+                        onEnterPress={() =>
+                          addKeyResult(okrIndex, keyResultIndex)
+                        }
+                        onMoveUp={() => {
+                          const prevInput = document.querySelector(
+                            `input[data-okr-index="${okrIndex}"][data-kr-index="${
+                              keyResultIndex - 1
+                            }"]`,
+                          ) as HTMLInputElement;
+                          prevInput?.focus();
+                        }}
+                        onMoveDown={() => {
+                          const nextInput = document.querySelector(
+                            `input[data-okr-index="${okrIndex}"][data-kr-index="${
+                              keyResultIndex + 1
+                            }"]`,
+                          ) as HTMLInputElement;
+                          nextInput?.focus();
+                        }}
                       />
                     ))}
                   </div>
