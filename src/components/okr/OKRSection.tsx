@@ -109,10 +109,8 @@ function OKRSection() {
           )}
 
           {/* OKR 진행률 그래프 */}
-          <div className="flex flex-col gap-2">
-            <Title className="text-neutral-900 dark:text-white">
-              OKR 진행률
-            </Title>
+          <div className="flex flex-col gap-2 mt-4">
+            <Title className="text-neutral-900 dark:text-white">진행률</Title>
 
             <div className="flex flex-col gap-4">
               <ProgressBar title="Personal OKR" percentage={personalProgress} />
