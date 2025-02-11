@@ -1,4 +1,4 @@
-import api, { handleApiError } from '@/lib/api/axios';
+import api, { handleApiError } from './axios';
 
 // 타입 정의
 export interface KeyResult {
