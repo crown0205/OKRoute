@@ -9,8 +9,6 @@ interface KeyResultItemProps {
   onToggleCheck: () => void;
   onChangeValue: (value: string) => void;
   onEnterPress: () => void;
-  onMoveUp: () => void;
-  onMoveDown: () => void;
   okrIndex: number;
   keyResultIndex: number;
 }
@@ -20,8 +18,6 @@ export function KeyResultItem({
   onToggleCheck,
   onChangeValue,
   onEnterPress,
-  onMoveUp,
-  onMoveDown,
   okrIndex,
   keyResultIndex,
 }: KeyResultItemProps) {
@@ -29,12 +25,6 @@ export function KeyResultItem({
     if (e.key === 'Enter') {
       e.preventDefault();
       onEnterPress();
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      onMoveDown();
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      onMoveUp();
     }
   };
 

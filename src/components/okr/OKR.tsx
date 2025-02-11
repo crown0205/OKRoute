@@ -173,22 +173,6 @@ function OKR({
                         onEnterPress={() =>
                           addKeyResult(okrIndex, keyResultIndex)
                         }
-                        onMoveUp={() => {
-                          const prevInput = document.querySelector(
-                            `input[data-okr-index="${okrIndex}"][data-kr-index="${
-                              keyResultIndex - 1
-                            }"]`,
-                          ) as HTMLInputElement;
-                          prevInput?.focus();
-                        }}
-                        onMoveDown={() => {
-                          const nextInput = document.querySelector(
-                            `input[data-okr-index="${okrIndex}"][data-kr-index="${
-                              keyResultIndex + 1
-                            }"]`,
-                          ) as HTMLInputElement;
-                          nextInput?.focus();
-                        }}
                       />
                     ))}
                   </div>
@@ -203,7 +187,7 @@ function OKR({
       </div>
 
       <button
-        className="mt-8 text-sm px-5 py-2.5 rounded-lg border border-neutral-300 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+        className="text-sm px-5 py-2.5 rounded-lg border border-neutral-300 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
         onClick={handleAddOKR}
         disabled={okrs.length >= 3}
       >
