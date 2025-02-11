@@ -1,10 +1,8 @@
-import { okrService } from '@/services/okrService';
-
-import type {
+import {
   CreateKeyResultDto,
+  okrService,
   UpdateKeyResultDto,
-} from '@/services/okrService';
-
+} from '@/api/okrService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useOKRs = () => {
