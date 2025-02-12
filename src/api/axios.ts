@@ -11,13 +11,7 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   retry?: boolean;
 }
 
-interface ApiResponse<T = any> {
-  data: T;
-  status: number;
-  message: string;
-}
-
-interface ErrorResponse {
+export interface ErrorResponse {
   message: string;
   status?: number;
   data?: any;
@@ -105,20 +99,33 @@ axiosInstance.interceptors.response.use(
 
 // API 메서드 래퍼
 export const api = {
-  get: <T>(url: string, config?: AxiosRequestConfig) =>
-    axiosInstance.get<T, AxiosResponse<ApiResponse<T>>>(url, config),
+  get: <T>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<AxiosResponse<T>> => axiosInstance.get<T>(url, config),
 
-  post: <T>(url: string, data?: any, config?: AxiosRequestConfig) =>
-    axiosInstance.post<T, AxiosResponse<ApiResponse<T>>>(url, data, config),
+  post: <T>(
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<AxiosResponse<T>> => axiosInstance.post<T>(url, data, config),
 
-  put: <T>(url: string, data?: any, config?: AxiosRequestConfig) =>
-    axiosInstance.put<T, AxiosResponse<ApiResponse<T>>>(url, data, config),
+  put: <T>(
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<AxiosResponse<T>> => axiosInstance.put<T>(url, data, config),
 
-  delete: <T>(url: string, config?: AxiosRequestConfig) =>
-    axiosInstance.delete<T, AxiosResponse<ApiResponse<T>>>(url, config),
+  delete: <T>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<AxiosResponse<T>> => axiosInstance.delete<T>(url, config),
 
-  patch: <T>(url: string, data?: any, config?: AxiosRequestConfig) =>
-    axiosInstance.patch<T, AxiosResponse<ApiResponse<T>>>(url, data, config),
+  patch: <T>(
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<AxiosResponse<T>> => axiosInstance.patch<T>(url, data, config),
 };
 
 // 에러 핸들링 유틸
