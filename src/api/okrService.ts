@@ -1,17 +1,20 @@
-import api, { handleApiError } from './axios';
+import api, { handleApiError, ErrorResponse } from './axios';
 
 // 타입 정의
 export interface KeyResult {
   id: string;
-  title: string;
-  targetValue: number;
-  currentValue: number;
-  progress: number;
+  value: string;
+  isChecked: boolean;
+  paddingLeft: number;
 }
 
 interface OKR {
   id: string;
-  title: string;
+  category: string;
+  objective: string;
+  isShowOKR: boolean;
+  createdAt: string;
+  updatedAt: string;
   progress: number;
   keyResults: KeyResult[];
 }
@@ -34,10 +37,11 @@ export interface UpdateKeyResultDto {
 // OKR 관련 API 호출
 export const okrService = {
   // OKR 목록 조회
-  getOKRs: async () => {
+
+  getOKRs: async (): Promise<OKR[] | ErrorResponse> => {
     try {
       const { data } = await api.get<{ okrs: OKR[] }>('/okr');
-      return data;
+      return data.okrs;
     } catch (error) {
       return handleApiError(error);
     }
@@ -46,7 +50,9 @@ export const okrService = {
   // 진행률이 포함된 OKR 목록 조회
   getOKRsWithProgress: async () => {
     try {
-      const { data } = await api.get<{ okrs: OKR[] }>('/okr/progress');
+      const { data } = await api.get<{ okrs: OKR[] } | ErrorResponse>(
+        '/okr/progress',
+      );
       return data;
     } catch (error) {
       return handleApiError(error);
